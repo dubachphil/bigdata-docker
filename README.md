@@ -8,7 +8,7 @@
 ## Usage after Installation
 - cd bigdata-docker
 - docker-compose up -d
-- Open Webbrowser http://<Host IP Address>:9870
+- Open Webbrowser http://"<Host IP Address>":9870
   
 ## Stop System
 - docker-compose down
