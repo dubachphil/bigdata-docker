@@ -25,7 +25,8 @@
 <pre>
 - docker-compose down                                           # Shut down the system. 
                                                                 # All Data are stored in Docker Volume
-</pre>                                                          # You will not loose the data
+                                                                # You will not loose the data
+</pre> 
 
 ## Remove the Volumes
 <pre></pre> 
