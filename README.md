@@ -1,14 +1,17 @@
 # BigData with Docker on CentOS 8
 
 ## Building
+<pre>
 - git clone https://github.com/dubachphil/bigdata-docker.git
 - cd bigdata-docker
 - sh ./build_images.sh
-
+</pre>
 ## Deployment
+<pre>
 - cd bigdata-docker
 - docker-compose up -d
 - Open Webbrowser http://"Host IP Address":9870
+</pre>
 
 ## Copy Files from outside to HDFS
 <pre>
