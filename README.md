@@ -22,4 +22,6 @@
 - docker exec datanode hadoop fs -rm /home/myfile    #remove myfile in hdfs filesystem
 </pre>
 ## Shutdown System
+<pre>
 - docker-compose down
+</pre>
