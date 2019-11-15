@@ -4,7 +4,7 @@
 <pre>
 - git clone https://github.com/dubachphil/bigdata-docker.git    # Clone my repo :)
 - cd bigdata-docker                                             # Change to the cloned folder
-- sh ./build_images.sh                                          # Build the images (at this time 9GB Data)
+- sh ./build_images.sh                                          # Build the images (9 GB)
 </pre>
 ## Deployment
 <pre>
@@ -23,7 +23,8 @@
 </pre>
 ## Shutdown System
 <pre>
-- docker-compose down                                           # Shut down the system. All Data are stored in Docker Volume
+- docker-compose down                                           # Shut down the system. 
+                                                                # All Data are stored in Docker Volume
 </pre>                                                          # You will not loose the data
 
 ## Remove the Volumes
