@@ -30,5 +30,6 @@
 
 ## Remove all persistent Volumes
 <pre>
+# Remove volumes if you want delete all your data
 docker volume rm $(docker volume ls -f name=docker-hadoop_hadoop_ -q)
 </pre> 
