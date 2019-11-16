@@ -3,7 +3,6 @@ version: "3"
 services:
   namenode:
     image: dubachphil/hadoop_namenode
-    container_name: namenode
     ports:
       - 9870:9870
     volumes:
@@ -13,37 +12,51 @@ services:
     env_file:
       - ./hadoop.env
 
-  datanode:
+  datanode1:
     image: dubachphil/hadoop_datanode
-    container_name: datanode
     volumes:
-      - hadoop_datanode:/hadoop/dfs/data
+      - hadoop_datanode1:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
       - ./hadoop.env
-  
-  resourcemanager:
-    image: dubachphil/hadoop_resourcemanager
-    container_name: resourcemanager
+
+  datanode2:
+    image: dubachphil/hadoop_datanode
+    volumes:
+      - hadoop_datanode2:/hadoop/dfs/data
     environment:
-      SERVICE_PRECONDITION: "namenode:9870 datanode:9864"
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file:
+      - ./hadoop.env  
+
+  datanode3:
+    image: dubachphil/hadoop_datanode
+    volumes:
+      - hadoop_datanode3:/hadoop/dfs/data
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
     env_file:
       - ./hadoop.env
 
-  nodemanager1:
-    image: dubachphil/hadoop_nodemanager
-    container_name: nodemanager
+  resourcemanager:
+    image: dubachphil/hadoop_resourcemanager
     environment:
-      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864"
+    env_file:
+      - ./hadoop.env
+
+  nodemanager:
+    image: dubachphil/hadoop_nodemanager
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     env_file:
       - ./hadoop.env
   
   historyserver:
     image: dubachphil/hadoop_historyserver
-    container_name: historyserver
     environment:
-      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
     volumes:
       - hadoop_historyserver:/hadoop/yarn/timeline
     env_file:
@@ -51,5 +64,7 @@ services:
   
 volumes:
   hadoop_namenode:
-  hadoop_datanode:
+  hadoop_datanode1:
+  hadoop_datanode2:
+  hadoop_datanode3:
   hadoop_historyserver:

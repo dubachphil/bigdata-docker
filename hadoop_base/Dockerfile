@@ -3,7 +3,7 @@ FROM centos:8
 MAINTAINER Philipp Dubach <dubachphil@hotmail.com>
 
 RUN dnf update -y 
-RUN dnf install curl java-1.8.0-openjdk perl nmap-ncat -y
+RUN dnf install curl java-1.8.0-openjdk perl nmap-ncat java-1.8.0-openjdk-devel.x86_64 -y
       
 ENV JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk/
 
