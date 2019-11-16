@@ -28,5 +28,7 @@
                                                                 # You will not loose the data
 </pre> 
 
-## Remove the Volumes
-<pre></pre> 
+## Remove all persistent Volumes
+<pre>
+docker volume rm $(docker volume ls -f name=docker-hadoop_hadoop_ -q)
+</pre> 
