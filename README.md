@@ -16,10 +16,10 @@
 ## Copy Files from outside to HDFS
 <pre>
 - docker cp myfile <datanode-container-id>:/                       # copy localfile to container
-- docker exec <datanode-container-id> hadoop fs -mkdir /home       # create a directory in hdfs filesystem
-- docker exec <datanode-container-id> hadoop fs -put myfile /home  # put the file into hdfs filesystem
-- docker exec <datanode-container-id> rm myfile                    # remove myfile in container
-- docker exec <datanode-container-id> hadoop fs -rm /home/myfile   # remove myfile in hdfs filesystem
+- docker exec '<datanode-container-id>' hadoop fs -mkdir /home       # create a directory in hdfs filesystem
+- docker exec '<datanode-container-id>' hadoop fs -put myfile /home  # put the file into hdfs filesystem
+- docker exec '<datanode-container-id>' rm myfile                    # remove myfile in container
+- docker exec '<datanode-container-id>' hadoop fs -rm /home/myfile   # remove myfile in hdfs filesystem
 </pre>
 ## Shutdown System
 <pre>
