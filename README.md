@@ -29,7 +29,7 @@
 </pre> 
 
 ## Show the running processes
-docker ps -q f name=bigdata-docker | xargs -I'{}' docker exec -t {} jps
+docker ps -qf name=bigdata-docker | xargs -I'{}' docker exec -t {} jps
 
 
 ## Remove all persistent Volumes
