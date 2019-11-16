@@ -28,6 +28,10 @@
                                                                 # You will not loose the data
 </pre> 
 
+## Show the running processes
+docker ps -q | xargs -I'{}' docker exec -t {} jps
+
+
 ## Remove all persistent Volumes
 <pre>
 # Remove volumes if you want delete all your data
