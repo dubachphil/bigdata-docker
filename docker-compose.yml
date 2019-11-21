@@ -5,35 +5,17 @@ services:
     image: dubachphil/hadoop_namenode
     ports:
       - 9870:9870
-    volumes:
-      - hadoop_namenode:/hadoop/dfs/name
+#    volumes:
+#      - hadoop_namenode:/hadoop/dfs/name
     environment:
-      - CLUSTER_NAME=test
+      - CLUSTER_NAME=hadoop_cluster
     env_file:
       - ./hadoop.env
 
-  datanode1:
+  datanode:
     image: dubachphil/hadoop_datanode
-    volumes:
-      - hadoop_datanode1:/hadoop/dfs/data
-    environment:
-      SERVICE_PRECONDITION: "namenode:9870"
-    env_file:
-      - ./hadoop.env
-
-  datanode2:
-    image: dubachphil/hadoop_datanode
-    volumes:
-      - hadoop_datanode2:/hadoop/dfs/data
-    environment:
-      SERVICE_PRECONDITION: "namenode:9870"
-    env_file:
-      - ./hadoop.env  
-
-  datanode3:
-    image: dubachphil/hadoop_datanode
-    volumes:
-      - hadoop_datanode3:/hadoop/dfs/data
+#    volumes:
+#      - hadoop_datanode1:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
@@ -57,8 +39,8 @@ services:
     image: dubachphil/hadoop_historyserver
     environment:
       SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
-    volumes:
-      - hadoop_historyserver:/hadoop/yarn/timeline
+#    volumes:
+#      - hadoop_historyserver:/hadoop/yarn/timeline
     env_file:
       - ./hadoop.env
 
@@ -69,10 +51,17 @@ services:
       - "7077:7077"
     environment:
       - INIT_DAEMON_STEP=setup_spark
+
+  spark-worker:
+    image: dubachphil/spark_worker
+    depends_on:
+      - spark-master
+    environment:
+      - "SPARK_MASTER=spark://spark-master:7077"
   
-volumes:
-  hadoop_namenode:
-  hadoop_datanode1:
-  hadoop_datanode2:
-  hadoop_datanode3:
-  hadoop_historyserver:
+#volumes:
+#  hadoop_namenode:
+#  hadoop_datanode1:
+#  hadoop_datanode2:
+#  hadoop_datanode3:
+#  hadoop_historyserver:
