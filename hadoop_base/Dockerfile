@@ -4,7 +4,8 @@ MAINTAINER Philipp Dubach <dubachphil@hotmail.com>
 
 RUN dnf update -y 
 RUN dnf install curl java-1.8.0-openjdk perl nmap-ncat java-1.8.0-openjdk-devel.x86_64 -y
-RUN dnf install glibc-langpack-en -y
+RUN dnf install glibc-langpack-en nano python3 python3-pip -y
+RUN pip3 install pyspark pandas findspark
       
 ENV JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk/
 
@@ -19,16 +20,21 @@ RUN set -x \
     && rm -f /tmp/hadoop.tar.gz*
 
 RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
+RUN echo "alias ll='ls -la'" >> /root/.bashrc
+RUN echo "alias ll='ls -la'" >> /etc/bash.bashrc
+RUN echo "alias python='/usr/bin/python3'" >> /root/.bashrc
+RUN echo "alias python='/usr/bin/python3'" >> /etc/bash.bashrc
 
 RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs
 
 RUN mkdir /hadoop-data
 
-ENV HADOOP_PREFIX=/opt/hadoop-$HADOOP_VERSION
+ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION
 ENV HADOOP_CONF_DIR=/etc/hadoop
 ENV MULTIHOMED_NETWORK=1
 ENV USER=root
-ENV PATH $HADOOP_PREFIX/bin/:$PATH
+ENV PATH $HADOOP_HOME/bin/:$PATH
+ENV PATH /usr/bin:$PATH
 
 ADD entrypoint.sh /entrypoint.sh
 

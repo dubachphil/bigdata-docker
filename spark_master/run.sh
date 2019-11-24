@@ -8,9 +8,6 @@ export SPARK_MASTER_HOST=`hostname`
 
 mkdir -p $SPARK_MASTER_LOG
 
-export SPARK_HOME=/spark
-export PATH=$PATH:/spark/bin
-
 ln -sf /dev/stdout $SPARK_MASTER_LOG/spark-master.out
 
 cd /spark/bin && /spark/sbin/../bin/spark-class org.apache.spark.deploy.master.Master \

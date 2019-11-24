@@ -37,3 +37,7 @@ docker ps -qf name=bigdata-docker | xargs -I'{}' docker exec -t {} jps
 # Remove volumes if you want delete all your data
 - docker volume rm $(docker volume ls -f name=docker-hadoop_hadoop_ -q)
 </pre> 
+
+<pre>
+docker network inspect bigdata-docker_default | grep -e "Name" -e "IPv4" -e "Gateway" -e "Subnet" -e "Containers"
+</pre>

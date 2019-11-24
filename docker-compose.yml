@@ -23,23 +23,32 @@ services:
 
   resourcemanager:
     image: dubachphil/hadoop_resourcemanager
+    ports:
+      - 8088:8088
     environment:
-      SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864"
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864"
+    depends_on:
+      - namenode
+      - datanode
     env_file:
       - ./hadoop.env
 
   nodemanager:
     image: dubachphil/hadoop_nodemanager
     environment:
-      SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
+    depends_on:
+      - resourcemanager
     env_file:
       - ./hadoop.env
   
   historyserver:
     image: dubachphil/hadoop_historyserver
     environment:
-      SERVICE_PRECONDITION: "namenode:9870 datanode1:9864 datanode2:9864 datanode3:9864 resourcemanager:8088"
-#    volumes:
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
+    depends_on:
+      - nodemanager
+#   volumes:
 #      - hadoop_historyserver:/hadoop/yarn/timeline
     env_file:
       - ./hadoop.env
@@ -47,10 +56,14 @@ services:
   spark-master:
     image: dubachphil/spark_master
     ports:
-      - "8080:8080"
-      - "7077:7077"
+      - 8080:8080
+      - 7077:7077
+    depends_on:
+      - historyserver
     environment:
       - INIT_DAEMON_STEP=setup_spark
+    env_file:
+      - ./hadoop.env
 
   spark-worker:
     image: dubachphil/spark_worker
@@ -58,7 +71,24 @@ services:
       - spark-master
     environment:
       - "SPARK_MASTER=spark://spark-master:7077"
-  
+    env_file:
+      - ./hadoop.env
+
+  zeppelin:
+    image: apache/zeppelin:0.8.0
+    ports:
+      - 8888:8080
+    environment:
+      - "CORE_CONF_fs_defaultFS=hdfs://namenode:8020"
+      - "SPARK_MASTER=spark://spark-master:7077"
+      - "MASTER=spark://spark-master:7077"
+      - "SPARK_HOME=/spark"
+    depends_on:
+      - spark-master
+      - namenode
+    env_file:
+      - ./hadoop.env
+
 #volumes:
 #  hadoop_namenode:
 #  hadoop_datanode1:
