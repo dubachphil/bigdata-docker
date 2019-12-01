@@ -82,7 +82,6 @@ services:
       - "CORE_CONF_fs_defaultFS=hdfs://namenode:8020"
       - "SPARK_MASTER=spark://spark-master:7077"
       - "MASTER=spark://spark-master:7077"
-      - "SPARK_HOME=/spark"
       - "ZEPPELIN_PORT=8888"
     depends_on:
       - spark-master
