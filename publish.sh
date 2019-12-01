@@ -9,4 +9,4 @@ docker push dubachphil/hadoop_nodemanager:latest
 docker push dubachphil/spark_base:latest
 docker push dubachphil/spark_master:latest
 docker push dubachphil/spark_worker:latest
-
+docker push dubachphil/zeppelin:latest
