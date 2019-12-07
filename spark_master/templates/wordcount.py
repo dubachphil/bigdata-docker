@@ -1,15 +1,10 @@
-import findspark
+from pyspark.sql import SparkSession
 import time
-findspark.init()
 
-from pyspark.conf import SparkConf
-from pyspark.context import SparkContext
-conf = SparkConf()
-conf.setMaster('spark://spark-master:7077')
-sc = SparkContext(conf=conf)
+spark = SparkSession.builder.appName("Wordcount_Lorem_Ipsum").getOrCreate()
+sc = spark.sparkContext
 
 timestamp = int(time.time())
-
 text_file = sc.textFile("hdfs:///home/wordcount.txt")
 counts = text_file.flatMap(lambda line: line.split(" ")) \
              .map(lambda word: (word, 1)) \
