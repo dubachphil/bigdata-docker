@@ -5,8 +5,7 @@ services:
     image: dubachphil/hadoop_namenode
     ports:
       - 9870:9870
-#    volumes:
-#      - hadoop_namenode:/hadoop/dfs/name
+      - 8020:8020
     environment:
       - CLUSTER_NAME=hadoop_cluster
     env_file:
@@ -14,8 +13,8 @@ services:
 
   datanode:
     image: dubachphil/hadoop_datanode
-#    volumes:
-#      - hadoop_datanode1:/hadoop/dfs/data
+    ports:
+      - 9864-9900:9864
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
@@ -35,6 +34,8 @@ services:
 
   nodemanager:
     image: dubachphil/hadoop_nodemanager
+    ports:
+      - 8042-8050:8042
     environment:
       SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
     depends_on:
@@ -44,12 +45,12 @@ services:
   
   historyserver:
     image: dubachphil/hadoop_historyserver
+    ports:
+      - 8188:8188
     environment:
       SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
     depends_on:
       - nodemanager
-#   volumes:
-#      - hadoop_historyserver:/hadoop/yarn/timeline
     env_file:
       - ./hadoop.env
 
@@ -58,6 +59,7 @@ services:
     ports:
       - 8080:8080
       - 7077:7077
+      - 6066:6066
     depends_on:
       - historyserver
     environment:
@@ -67,6 +69,8 @@ services:
 
   spark-worker:
     image: dubachphil/spark_worker
+    ports:
+      - 8081-8087:8081
     depends_on:
       - spark-master
     environment:
@@ -77,21 +81,19 @@ services:
   zeppelin:
     image: dubachphil/zeppelin
     ports:
-      - 8888:8888
+      - 80:9999
     environment:
       - "CORE_CONF_fs_defaultFS=hdfs://namenode:8020"
       - "SPARK_MASTER=spark://spark-master:7077"
       - "MASTER=spark://spark-master:7077"
-      - "ZEPPELIN_PORT=8888"
+      - "ZEPPELIN_PORT=9999"
+    volumes:
+      - zeppelin_notes:/opt/zeppelin/notebook
     depends_on:
       - spark-master
       - namenode
     env_file:
       - ./hadoop.env
 
-#volumes:
-#  hadoop_namenode:
-#  hadoop_datanode1:
-#  hadoop_datanode2:
-#  hadoop_datanode3:
-#  hadoop_historyserver:
+volumes:
+  zeppelin_notes:

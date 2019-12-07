@@ -5,7 +5,7 @@ MAINTAINER Philipp Dubach <dubachphil@hotmail.com>
 RUN dnf update -y 
 RUN dnf install curl java-1.8.0-openjdk perl nmap-ncat java-1.8.0-openjdk-devel.x86_64 -y
 RUN dnf install glibc-langpack-en nano python3 python3-pip -y
-RUN pip3 install pyspark pandas findspark
+RUN pip3 install pyspark pandas findspark matplotlib scikit-learn seaborn h5py scipy tflearn tensorflow scikit-image
       
 ENV JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk/
 
