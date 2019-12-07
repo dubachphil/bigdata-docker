@@ -3,7 +3,7 @@
 # Set some sensible defaults
 export CORE_CONF_fs_defaultFS=${CORE_CONF_fs_defaultFS:-hdfs://`hostname -f`:8020}
 export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-export PATH=$PATH:/opt/hadoop-3.2.1/bin/
+export PATH=$PATH:/opt/hadoop-3.1.3/bin/
 
 ln -s /usr/bin/python3 /usr/bin/python
 
