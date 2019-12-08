@@ -10,4 +10,4 @@ counts = text_file.flatMap(lambda line: line.split(" ")) \
              .map(lambda word: (word, 1)) \
              .reduceByKey(lambda a, b: a + b)
 counts.saveAsTextFile("hdfs:///home/" + str(timestamp) +  "_wordcount_results_spark" )
-print(counts.collect())
+print(sc.textFile("hdfs:///home/" + str(timestamp) +  "_wordcount_results_spark").collect())
