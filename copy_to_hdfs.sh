@@ -13,13 +13,13 @@ else
   file=$(basename $1)
   echo "Path to your File: $1"
   echo "Filename: $file"
-  echo "###### COPY TO CONTAINER ######'
+  echo "###### COPY TO CONTAINER ######"
   docker cp $1 bigdata-docker_spark-master_1:/tmp/
-  echo "###### CREATE DIRECTORY UPLOAD  ######'
+  echo "###### CREATE DIRECTORY UPLOAD  ######"
   docker exec bigdata-docker_spark-master_1 hdfs dfs -mkdir /upload
-  echo "###### UPLOAD FILE TO HDFS FILESTORAGE ######'
+  echo "###### UPLOAD FILE TO HDFS FILESTORAGE ######"
   docker exec bigdata-docker_spark-master_1 hdfs dfs -put -f /tmp/$file /upload/
-  echo "###### CLEANUP FILE IN CONTAINER ######'
+  echo "###### CLEANUP FILE IN CONTAINER ######"
   docker exec bigdata-docker_spark-master_1 rm -f /tmp/$file
   echo "###### DONE ######"
   echo "Your file: $1 is sucessfully uploaded to hdfs /home/upload/$file"
