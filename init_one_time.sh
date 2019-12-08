@@ -6,3 +6,9 @@ docker exec bigdata-docker_spark-master_1 hdfs dfs -put -f spark-libs.jar /archi
 docker exec bigdata-docker_spark-master_1 hdfs dfs -mkdir /home
 docker exec bigdata-docker_spark-master_1 hdfs dfs -put -f /root/wordcount.py /home
 docker exec bigdata-docker_spark-master_1 hdfs dfs -put -f /root/wordcount.txt /home
+docker exec bigdata-docker_namenode_1 hdfs dfs -mkdir /user
+docker exec bigdata-docker_namenode_1 hdfs dfs -mkdir /user/hue
+docker exec bigdata-docker_namenode_1 hdfs dfs -chown hue:root /user/hue
+docker exec bigdata-docker_namenode_1 hdfs dfs -chmod 777 /user/hue
+docker exec bigdata-docker_namenode_1 hdfs --daemon start httpfs
+

@@ -1,13 +1,11 @@
 version: "3"
-
 services:
   namenode:
     image: dubachphil/hadoop_namenode
     ports:
       - 9870:9870
       - 8020:8020
-    environment:
-      - CLUSTER_NAME=hadoop_cluster
+      - 14000:14000
     env_file:
       - ./hadoop.env
 
@@ -15,8 +13,6 @@ services:
     image: dubachphil/hadoop_datanode
     ports:
       - 9864-9900:9864
-    environment:
-      SERVICE_PRECONDITION: "namenode:9870"
     env_file:
       - ./hadoop.env
 
@@ -24,8 +20,6 @@ services:
     image: dubachphil/hadoop_resourcemanager
     ports:
       - 8088:8088
-    environment:
-      SERVICE_PRECONDITION: "namenode:9870 datanode:9864"
     depends_on:
       - namenode
       - datanode
@@ -36,8 +30,6 @@ services:
     image: dubachphil/hadoop_nodemanager
     ports:
       - 8042-8050:8042
-    environment:
-      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
     depends_on:
       - resourcemanager
     env_file:
@@ -47,8 +39,6 @@ services:
     image: dubachphil/hadoop_historyserver
     ports:
       - 8188:8188
-    environment:
-      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
     depends_on:
       - nodemanager
     env_file:
@@ -73,8 +63,6 @@ services:
       - 8081-8087:8081
     depends_on:
       - spark-master
-    environment:
-      - "SPARK_MASTER=spark://spark-master:7077"
     env_file:
       - ./hadoop.env
 
@@ -82,15 +70,20 @@ services:
     image: dubachphil/zeppelin
     ports:
       - 80:9999
-    environment:
-      - "CORE_CONF_fs_defaultFS=hdfs://namenode:8020"
-      - "SPARK_MASTER=spark://spark-master:7077"
-      - "MASTER=spark://spark-master:7077"
-      - "ZEPPELIN_PORT=9999"
     volumes:
       - zeppelin_notes:/opt/zeppelin/notebook
     depends_on:
       - spark-master
+      - namenode
+    env_file:
+      - ./hadoop.env
+
+# Actually not working with HDFS API
+  filebrowser:
+    image: dubachphil/hue:latest
+    ports:
+      - "8888:8888"
+    depends_on:
       - namenode
     env_file:
       - ./hadoop.env

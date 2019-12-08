@@ -25,8 +25,5 @@ ENV PATH="/spark:${PATH}"
 ENV PATH="/spark/bin:${PATH}"
 ENV SPARK_DIST_CLASSPATH=/etc/hadoop:/opt/hadoop-3.1.3/share/hadoop/common/lib/*:/opt/hadoop-3.1.3/share/hadoop/common/*:/opt/hadoop-3.1.3/share/hadoop/hdfs:/opt/hadoop-3.1.3/share/hadoop/hdfs/lib/*:/opt/hadoop-3.1.3/share/hadoop/hdfs/*:/opt/hadoop-3.1.3/share/hadoop/mapreduce/lib/*:/opt/hadoop-3.1.3/share/hadoop/mapreduce/*:/opt/hadoop-3.1.3/share/hadoop/yarn:/opt/hadoop-3.1.3/share/hadoop/yarn/lib/*:/opt/hadoop-3.1.3/share/hadoop/yarn/*
 
-#RUN jar cv0f spark-libs.jar -C $SPARK_HOME/jars/ .
-#RUN hdfs dfs -mkdir /archiv
-#RUN hdfs dfs -mkdir /archiv/jars
-#RUN hdfs dfs -put spark-libs.jar /archiv/jars
 RUN echo 'spark.yarn.archive hdfs:///archive/jars/spark-libs.jar' >> /spark/conf/spark-defaults.conf
+RUN echo 'spark.cores.max 4' >> /spark/conf/spark-defaults.conf
