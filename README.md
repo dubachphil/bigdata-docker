@@ -1,5 +1,9 @@
 # BigData with Docker on CentOS 8
 
+## Overview
+Presentation: https://github.com/dubachphil/bigdata-docker/blob/master/documentation/BigDataPresentaion.pdf
+Documentation (German): 
+
 ## Building
 <pre>
 - git clone https://github.com/dubachphil/bigdata-docker.git    # Clone my repo :)
