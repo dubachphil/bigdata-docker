@@ -8,7 +8,7 @@ Documentation (German):
 <pre>
 - git clone https://github.com/dubachphil/bigdata-docker.git    # Clone my repo :)
 - cd bigdata-docker                                             # Change to the cloned folder
-- sh ./build_images.sh                                          # Build the images (9 GB)
+- sh ./build_images.sh                                          # Build the images (3-4 GB)
 </pre>
 ## Deployment
 <pre>
