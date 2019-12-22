@@ -12,7 +12,7 @@ services:
   datanode:
     image: dubachphil/hadoop_datanode
     ports:
-      - 9864-9900:9864
+      - 10000-10099:9864
     env_file:
       - ./hadoop.env
 
@@ -29,7 +29,7 @@ services:
   nodemanager:
     image: dubachphil/hadoop_nodemanager
     ports:
-      - 8042-8050:8042
+      - 10100-10199:8042
     depends_on:
       - resourcemanager
     env_file:
@@ -50,8 +50,8 @@ services:
       - 8080:8080
       - 7077:7077
       - 6066:6066
-    depends_on:
-      - historyserver
+#    depends_on:
+#      - historyserver
     environment:
       - INIT_DAEMON_STEP=setup_spark
     env_file:
@@ -60,7 +60,7 @@ services:
   spark-worker:
     image: dubachphil/spark_worker
     ports:
-      - 8081-8087:8081
+      - 10200-10299:8081
     depends_on:
       - spark-master
     env_file:
@@ -72,9 +72,9 @@ services:
       - 80:9999
     volumes:
       - zeppelin_notes:/opt/zeppelin/notebook
-    depends_on:
-      - spark-master
-      - namenode
+#    depends_on:
+#      - spark-master
+#      - namenode
     env_file:
       - ./hadoop.env
 

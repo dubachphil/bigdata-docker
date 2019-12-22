@@ -11,4 +11,6 @@ WORKDIR /opt/zeppelin
 
 #RUN ./bin/install-interpreter.sh --all
 
+HEALTHCHECK CMD curl -f http://localhost:9999/ || exit 1
+
 CMD ["/opt/zeppelin/bin/zeppelin.sh"]
