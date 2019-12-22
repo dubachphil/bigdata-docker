@@ -8,5 +8,6 @@ docker build -t dubachphil/hadoop_historyserver:latest ./hadoop_historyserver
 docker build -t dubachphil/spark_base:latest ./spark_base
 docker build -t dubachphil/spark_master:latest ./spark_master
 docker build -t dubachphil/spark_worker:latest ./spark_worker
+docker build -t dubachphil/spark_historyserver:latest ./spark_historyserver
 docker build -t dubachphil/zeppelin:latest ./zeppelin
 docker build -t dubachphil/hue:latest ./hue
