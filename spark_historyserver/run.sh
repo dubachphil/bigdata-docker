@@ -3,7 +3,11 @@
 . "/spark/bin/load-spark-env.sh"
 
 mkdir -p $SPARK_HISTORY_LOG
-ln -sf /dev/stdout $SPARK_HISTORY_LOG/spark-events
+mkdir /spark/logs/
 
-#./spark/sbin/start-history-server.sh >> $SPARK_HISTORY_LOG/spark-events
-/spark/sbin/../bin/spark-class org.apache.spark.deploy.history.HistoryServer >> /tmp/spark-events/spark.out
+#touch /spark/logs/spark-history.out
+#ln -sf /dev/stdout /spark/logs/spark-history.out
+
+./spark/sbin/start-history-server.sh
+tail -f /spark/logs/*
+#/spark/sbin/../bin/spark-class org.apache.spark.deploy.history.HistoryServer #>> /spark/logs/spark-history.out
